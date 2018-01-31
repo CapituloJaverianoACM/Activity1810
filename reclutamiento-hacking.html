@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <link href="hacking.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/sha1.js"></script>
+    <script>
+      function swap(arr, iz, der){
+        var temp = arr[iz];
+        arr[iz]=arr[der];
+        arr[der]= temp;
+        return arr;
+      }
+      function permutation( arr,  curr, vec )
+      {
+        console.log(vec);
+        if(curr == 3)
+        {
+          var res=arr[0].concat( arr[1].concat(arr[2].concat(arr[3])));
+          //console.log(res);
+          vec.push(res);
+          //document.getElementById('demo').innerHTML = res;
+        }
+        else
+        {
+          for(var i=curr; i<4; i++)
+          {
+            swap(arr,curr, i);
+            permutation(arr, curr+1, vec);
+            swap(arr,curr,i);
+          }
+        }
+      }
+      function sleep(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+      }
+      async function hackear(){
+
+        /******************************************************************/
+        //respuesta
+        var correcta="da271b098bd12f3aef5d74455cceb8f6501b4606";
+        /*****************************************************************/
+        var pal1 = document.getElementById ('pass1').value.toString().toLowerCase();
+        var pal2 = document.getElementById ('pass2').value.toString().toLowerCase();
+        var pal3 = document.getElementById ('pass3').value.toString().toLowerCase();
+        var pal4 = document.getElementById ('pass4').value.toString().toLowerCase();
+
+
+        var arr=[pal1,pal2,pal3,pal4];
+        var aux=arr[0].concat( arr[1].concat(arr[2].concat(arr[3])));
+
+        var vec=[];
+
+        /*var aux = arr[0].concat( arr[1].concat(arr[2].concat(arr[3])));
+        document.getElementById('demo').innerHTML = aux;*/
+        permutation(arr,0,vec);
+
+
+        //  document.getElementById('demo').innerHTML = res;
+
+        var ans = "";
+        var aux="";
+        var ok = false;
+        var i;
+        for( i=0;i< vec.length ; i++)
+        {
+          aux=CryptoJS.SHA1(vec[i]);
+          // ans = document.getElementById('demo').innerHTML;
+          ans += ("> process var: "+vec[i] +" encripted: "+ aux+ " ...\n");
+          await sleep(200);
+          if(aux!=correcta){
+            ans+=" Incorrecta \n";
+
+          }
+          else{
+            ans+=" Coincidencia encontrada \n";
+            ok = true;
+            break;
+          }
+          document.getElementById('demo').innerHTML = ans;
+        }
+        if( ok )
+          ans += "Se encontro: " + vec[i] + ".\n";
+        else {
+          ans += "No se pudo encontrar la contrase&ntildea.\n";
+        }
+        document.getElementById('demo').innerHTML = ans;
+
+
+
+      }
+    </script>
+
+
+
+
+
+  <body>
+    <div class="container">
+      <header id="margen">
+        <img id="titulo" src="logo.png">
+      </header>
+
+      <div class="general">
+        <p>Ingrese cuatro posibles fragmentos de la contrase&ntildea en cualquier orden </p>
+
+
+        <input type="text" id ="pass1" name="firstname" >
+        <input type="text" id ="pass2" name="firstname" >
+        <input type="text" id ="pass3" name="firstname" >
+        <input type="text" id ="pass4" name="firstname" >
+
+
+        <!-- <br><br> -->
+      </div>
+      <div class="general">
+        <textarea id="demo" class="demo" ></textarea>
+        <div class="buttonGeneral">
+
+          <button type="button"  onclick="hackear();" >
+            Hackear
+          </button>
+        </div>
+
+      </div>
+      <footer>
+        ACMJaveriana
+      </footer>
+    </div>
+  </body>
+</html>

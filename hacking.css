@@ -1,0 +1,72 @@
+.demo{
+
+  height: 400px;
+  width: 640px;
+  background-color: black;
+  color: white;
+}
+
+#margen{
+  height: 150px;
+  width: 500;
+  background-color: #3B5998;
+  padding:1px;
+
+
+}
+
+#titulo{
+
+  margin: 30px;
+  background-color: white;
+
+
+}
+
+.general{
+  padding: 6px;
+  text-align: center;
+}
+
+p{
+  font-family:sans-serif;
+
+}
+button{
+  border: none;
+  display: inline-block;
+  overflow: hidden;
+  font-size: 20px;
+
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  background-color: #3B5998;
+  color: white;
+  font-family: sans-serif;
+  padding: 8;
+
+}
+
+#imagen{
+
+
+}
+
+div.container {
+    width: 100%;
+    border: 1px solid gray;
+}
+
+header, footer {
+    padding: 1em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: center;
+}
+.logo{
+  width: 35px;
+  margin: 10px;
+  align-self: center;
+}
